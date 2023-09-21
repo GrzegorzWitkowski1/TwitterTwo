@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content%}
+    <h1>Explore Profiles</h1>
+<br/>
+
+{% if profiles %}
+    {% for profile in profiles%}
+        Username: {{ profile.user.username }}<br/>
+        Tag: @{{ profile.user.username|lower }}<br/>
+        Last Active: {{ profile.last_active_date}}<br/>
+        <br/>
+    {% endfor %}
+
+{% endif %}
+
+{% endblock %}

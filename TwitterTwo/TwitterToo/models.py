@@ -11,6 +11,7 @@ class Profile(models.Model):
         symmetrical=False,
         blank=True,
     )
+    last_active_date = models.DateTimeField(User, auto_now=True)
 
     def __str__(self) -> str:
         return self.user.username
