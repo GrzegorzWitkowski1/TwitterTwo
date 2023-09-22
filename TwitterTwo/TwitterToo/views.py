@@ -8,6 +8,7 @@ def home(request):
     
     return render(request, 'home.html', {'tweets': tweets})
 
+
 def profile(request, pk):
     if request.user.is_authenticated:
         profile = Profile.objects.get(user_id=pk)
@@ -30,6 +31,7 @@ def profile(request, pk):
     else:
         messages.success(request, ('You must be logged in to view this page!'))
         return redirect('home')
+    
 
 def explore_profiles(request):
     if request.user.is_authenticated:
