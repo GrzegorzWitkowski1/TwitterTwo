@@ -22,6 +22,17 @@
               Profile
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">
+              Logout
+            </a>
+          </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'login' %}">
+            Login
+          </a>
+        </li>
         {% endif %}
       </ul>
       <form class="d-flex" role="search">
