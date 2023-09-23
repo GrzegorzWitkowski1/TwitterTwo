@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Profile, Tweet
-from .forms import TweetForm
+from .forms import TweetForm, RegisterUser
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm
+from django import forms
 
 
 def home(request):
@@ -82,3 +84,24 @@ def logout_user(request):
     logout(request)
     messages.success(request, ('You have been logged out!'))
     return redirect('home')
+
+
+def register_user(request):
+    form = RegisterUser()
+
+    if request.method == 'POST':
+        form = RegisterUser(request.POST)
+
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            # first_name = form.cleaned_data['first_name']
+            # last_name = form.cleaned_data['last_name']
+            # email = form.cleaned_data['email']
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            messages.success(request, ('You have succesfully registered!'))
+            return redirect('home')
+
+    return render(request, 'register.html', {'form': form})

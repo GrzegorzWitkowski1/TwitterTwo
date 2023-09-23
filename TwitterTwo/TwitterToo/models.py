@@ -37,5 +37,5 @@ def create_profile(sender, instance, created, **kwargs):
     if created:
         user_profile = Profile(user=instance)
         user_profile.save()
-        user_profile.follow.set([instance.profile.id])
+        user_profile.follows.set([instance.profile.id])
         user_profile.save()
