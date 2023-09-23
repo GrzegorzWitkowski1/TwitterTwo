@@ -14,7 +14,7 @@ class Tweet(models.Model):
 
     def __str__(self) -> str:
         return(
-            f'{self.user} '
+            f'{self.user}'
             f'{self.body}'
             f'({self.created_at:%d-%m-%Y %H:%M})'
         )
