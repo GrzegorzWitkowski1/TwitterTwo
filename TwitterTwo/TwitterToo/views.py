@@ -5,6 +5,7 @@ from .forms import TweetForm, RegisterUser
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
+from .moderation import moderator
 
 
 def home(request):
@@ -14,10 +15,23 @@ def home(request):
         if request.method == 'POST':
             if form.is_valid():
                 tweet = form.save(commit=False)
-                tweet.user = request.user
-                tweet.save()
-                messages.success(request, ('Your Tweet has been posted!'))
-                return redirect('home')
+
+                if (offence := moderator(tweet.body)) == 'Hate Speech':
+                    messages.error(request, 'Your Tweet possibly contains hate speech and cannot be posted.')
+                    return redirect('home')
+                
+                elif offence == 'Offensive Language':
+                    tweet.is_offensive = True
+                    tweet.user = request.user
+                    tweet.save()
+                    messages.success(request, ('Your Tweet possibly contains offensive speech and has been flagged.'))
+                    messages.success(request, ('Your Tweet has been posted!'))
+
+                elif offence == 'No Hate and Offensive':
+                    tweet.user = request.user
+                    tweet.save()
+                    messages.success(request, ('Your Tweet has been posted!'))
+                    return redirect('home')
 
         tweets = Tweet.objects.all().order_by('-created_at')
         return render(request, 'home.html', {'tweets': tweets, 'form': form})

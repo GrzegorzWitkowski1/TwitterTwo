@@ -17,7 +17,7 @@ class TweetForm(forms.ModelForm):
 
     class Meta:
         model = Tweet
-        exclude = ('user',)
+        exclude = ('user', 'is_offensive',)
 
 
 class RegisterUser(UserCreationForm):
