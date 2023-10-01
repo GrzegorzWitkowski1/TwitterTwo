@@ -52,8 +52,6 @@ def moderator(X: str) -> str:
         X = logreg.predict(X)
 
         return X[0]
-        
-print(moderator('Hate'))
 
 
 
