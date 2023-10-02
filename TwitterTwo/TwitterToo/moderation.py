@@ -29,7 +29,7 @@ def clean(text):
 
 def lemmatizing(tweet):
     download('wordnet')
-    lemmatizer=WordNetLemmatizer()
+    lemmatizer = WordNetLemmatizer()
     words = tweet.split()
     lemmatized_words = [lemmatizer.lemmatize(word) for word in words]
     lemmatized_tweet = ' '.join(lemmatized_words)

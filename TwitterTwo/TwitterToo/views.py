@@ -26,6 +26,7 @@ def home(request):
                     tweet.save()
                     messages.success(request, ('Your Tweet has been posted!'))
                     messages.success(request, ('Your Tweet possibly contains offensive speech and has been flagged.'))
+                    return redirect('home')
 
                 elif offence == 'No Hate and Offensive':
                     tweet.user = request.user
